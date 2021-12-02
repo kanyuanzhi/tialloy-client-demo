@@ -1,7 +1,6 @@
-package service
+package component
 
 import (
-	"ergate/face"
 	"ergate/model"
 	"github.com/shirou/gopsutil/disk"
 )
@@ -11,14 +10,14 @@ type DiskCollector struct {
 	DiskRunningInfo *model.DiskRunningInfo
 }
 
-func NewDiskCollector() face.ICollector {
+func NewDiskCollector() *DiskCollector {
 	return &DiskCollector{
 		DiskBasicInfo:   model.NewDiskBasicInfo(),
 		DiskRunningInfo: model.NewDiskRunningInfo(),
 	}
 }
 
-func (dc *DiskCollector) GetBasicInfo() interface{} {
+func (dc *DiskCollector) GetBasicInfo() *model.DiskBasicInfo {
 	diskInfo, _ := disk.Usage(".")
 	dc.DiskBasicInfo.Path = diskInfo.Path
 	dc.DiskBasicInfo.Fstype = diskInfo.Fstype
@@ -26,7 +25,7 @@ func (dc *DiskCollector) GetBasicInfo() interface{} {
 	return dc.DiskBasicInfo
 }
 
-func (dc *DiskCollector) GetRunningInfo() interface{} {
+func (dc *DiskCollector) GetRunningInfo() *model.DiskRunningInfo {
 	diskInfo, _ := disk.Usage(".")
 	dc.DiskRunningInfo.Free = diskInfo.Free
 	dc.DiskRunningInfo.Used = diskInfo.Used

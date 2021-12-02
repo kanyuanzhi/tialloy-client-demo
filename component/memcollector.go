@@ -1,7 +1,6 @@
-package service
+package component
 
 import (
-	"ergate/face"
 	"ergate/model"
 	"github.com/shirou/gopsutil/mem"
 )
@@ -11,20 +10,20 @@ type MemCollector struct {
 	MemRunningInfo *model.MemRunningInfo
 }
 
-func NewMemCollector() face.ICollector {
+func NewMemCollector() *MemCollector {
 	return &MemCollector{
 		MemBasicInfo:   model.NewMemBasicInfo(),
 		MemRunningInfo: model.NewMemRunningInfo(),
 	}
 }
 
-func (mc *MemCollector) GetBasicInfo() interface{} {
+func (mc *MemCollector) GetBasicInfo() *model.MemBasicInfo {
 	memInfo, _ := mem.VirtualMemory()
 	mc.MemBasicInfo.Total = memInfo.Total
 	return mc.MemBasicInfo
 }
 
-func (mc *MemCollector) GetRunningInfo() interface{} {
+func (mc *MemCollector) GetRunningInfo() *model.MemRunningInfo {
 	memInfo, _ := mem.VirtualMemory()
 	mc.MemRunningInfo.Available = memInfo.Available
 	mc.MemRunningInfo.Used = memInfo.Used

@@ -1,7 +1,6 @@
-package service
+package component
 
 import (
-	"ergate/face"
 	"ergate/model"
 	"github.com/shirou/gopsutil/cpu"
 )
@@ -11,14 +10,14 @@ type CpuCollector struct {
 	CpuRunningInfo *model.CpuRunningInfo
 }
 
-func NewCpuCollector() face.ICollector {
+func NewCpuCollector() *CpuCollector {
 	return &CpuCollector{
 		CpuBasicInfo:   model.NewCpuBasicInfo(),
 		CpuRunningInfo: model.NewCpuRunningInfo(),
 	}
 }
 
-func (cc *CpuCollector) GetBasicInfo() interface{} {
+func (cc *CpuCollector) GetBasicInfo() *model.CpuBasicInfo {
 	cpuInfo, _ := cpu.Info()
 	cc.CpuBasicInfo.ModelName = cpuInfo[0].ModelName
 	cc.CpuBasicInfo.PhysicalCores, _ = cpu.Counts(false)
@@ -26,7 +25,7 @@ func (cc *CpuCollector) GetBasicInfo() interface{} {
 	return cc.CpuBasicInfo
 }
 
-func (cc *CpuCollector) GetRunningInfo() interface{} {
+func (cc *CpuCollector) GetRunningInfo() *model.CpuRunningInfo {
 	//cc.cpuRunningInfo.TotalPercent, _ = cpu.Percent(time.Duration(cpuCollector.duration)*time.Second, false)
 	//cc.cpuRunningInfo.PerPercent, _ = cpu.Percent(time.Duration(cpuCollector.duration)*time.Second, true)
 	cc.CpuRunningInfo.TotalPercent, _ = cpu.Percent(0, false)

@@ -1,7 +1,6 @@
-package service
+package component
 
 import (
-	"ergate/face"
 	"ergate/model"
 	"github.com/shirou/gopsutil/host"
 )
@@ -11,14 +10,14 @@ type HostCollector struct {
 	HostRunningInfo *model.HostRunningInfo
 }
 
-func NewHostCollector() face.ICollector {
+func NewHostCollector() *HostCollector {
 	return &HostCollector{
 		HostBasicInfo:   model.NewHostBasicInfo(),
 		HostRunningInfo: model.NewHostRunningInfo(),
 	}
 }
 
-func (hc *HostCollector) GetBasicInfo() interface{} {
+func (hc *HostCollector) GetBasicInfo() *model.HostBasicInfo {
 	hostInfo, _ := host.Info()
 	hc.HostBasicInfo.Hostname = hostInfo.Hostname
 	hc.HostBasicInfo.OS = hostInfo.OS
@@ -36,7 +35,7 @@ func (hc *HostCollector) GetBasicInfo() interface{} {
 	return hc.HostBasicInfo
 }
 
-func (hc *HostCollector) GetRunningInfo() interface{} {
+func (hc *HostCollector) GetRunningInfo() *model.HostRunningInfo {
 	hostInfo, _ := host.Info()
 	hc.HostRunningInfo.Uptime = hostInfo.Uptime
 	hc.HostRunningInfo.Procs = hostInfo.Procs
