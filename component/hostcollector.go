@@ -1,8 +1,8 @@
 package component
 
 import (
-	"ergate/model"
 	"github.com/shirou/gopsutil/host"
+	"tialloy-client-demo/model"
 )
 
 type HostCollector struct {

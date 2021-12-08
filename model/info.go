@@ -5,6 +5,10 @@ type Info struct {
 	RunningInfo *RunningInfo `json:"running_info,omitempty"`
 }
 
+func NewInfo() *Info {
+	return &Info{}
+}
+
 type BasicInfo struct {
 	HostBasicInfo *HostBasicInfo `json:"host_basic_info"`
 	CpuBasicInfo  *CpuBasicInfo  `json:"cpu_basic_info"`

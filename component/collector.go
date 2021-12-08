@@ -1,7 +1,7 @@
 package component
 
 import (
-	"ergate/model"
+	"tialloy-client-demo/model"
 )
 
 type Collector struct {

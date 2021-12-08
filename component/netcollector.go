@@ -1,9 +1,10 @@
 package component
 
 import (
-	"ergate/model"
+	"github.com/kanyuanzhi/tialloy-client/utils"
 	"github.com/shirou/gopsutil/net"
 	"strings"
+	"tialloy-client-demo/model"
 )
 
 type NetCollector struct {
@@ -29,9 +30,11 @@ func (nc *NetCollector) GetBasicInfo() *model.NetBasicInfo {
 			if ip_ == nc.IP {
 				nc.NetBasicInfo.Name = inter.Name
 				nc.NetBasicInfo.Mac = inter.HardwareAddr
+				return nc.NetBasicInfo
 			}
 		}
 	}
+	utils.GlobalLog.Warnf("IP=%s is not match", nc.IP)
 	return nc.NetBasicInfo
 }
 

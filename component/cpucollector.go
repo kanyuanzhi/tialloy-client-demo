@@ -1,8 +1,8 @@
 package component
 
 import (
-	"ergate/model"
 	"github.com/shirou/gopsutil/cpu"
+	"tialloy-client-demo/model"
 )
 
 type CpuCollector struct {

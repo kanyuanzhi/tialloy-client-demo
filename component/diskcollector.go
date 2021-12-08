@@ -1,8 +1,8 @@
 package component
 
 import (
-	"ergate/model"
 	"github.com/shirou/gopsutil/disk"
+	"tialloy-client-demo/model"
 )
 
 type DiskCollector struct {

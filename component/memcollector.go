@@ -1,8 +1,8 @@
 package component
 
 import (
-	"ergate/model"
 	"github.com/shirou/gopsutil/mem"
+	"tialloy-client-demo/model"
 )
 
 type MemCollector struct {
