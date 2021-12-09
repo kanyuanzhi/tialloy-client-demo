@@ -19,8 +19,8 @@ type Collector struct {
 
 func NewCollector() *Collector {
 	return &Collector{
-		BasicInfo:   model.NewBasicInfo(),
-		RunningInfo: model.NewRunningInfo(),
+		BasicInfo:   &model.BasicInfo{},
+		RunningInfo: &model.RunningInfo{},
 
 		HostCollector: NewHostCollector(),
 		CpuCollector:  NewCpuCollector(),
@@ -31,19 +31,23 @@ func NewCollector() *Collector {
 }
 
 func (c *Collector) GetBasicInfo() *model.BasicInfo {
-	c.BasicInfo.HostBasicInfo = c.HostCollector.GetBasicInfo()
-	c.BasicInfo.CpuBasicInfo = c.CpuCollector.GetBasicInfo()
-	c.BasicInfo.MemBasicInfo = c.MemCollector.GetBasicInfo()
-	c.BasicInfo.NetBasicInfo = c.NetCollector.GetBasicInfo()
-	c.BasicInfo.DiskBasicInfo = c.DiskCollector.GetBasicInfo()
+	c.BasicInfo.Data = &model.BasicInfoData{
+		HostBasicInfo: c.HostCollector.GetBasicInfo(),
+		CpuBasicInfo:  c.CpuCollector.GetBasicInfo(),
+		MemBasicInfo:  c.MemCollector.GetBasicInfo(),
+		NetBasicInfo:  c.NetCollector.GetBasicInfo(),
+		DiskBasicInfo: c.DiskCollector.GetBasicInfo(),
+	}
 	return c.BasicInfo
 }
 
 func (c *Collector) GetRunningInfo() *model.RunningInfo {
-	c.RunningInfo.HostRunningInfo = c.HostCollector.GetRunningInfo()
-	c.RunningInfo.CpuRunningInfo = c.CpuCollector.GetRunningInfo()
-	c.RunningInfo.MemRunningInfo = c.MemCollector.GetRunningInfo()
-	c.RunningInfo.NetRunningInfo = c.NetCollector.GetRunningInfo()
-	c.RunningInfo.DiskRunningInfo = c.DiskCollector.GetRunningInfo()
+	c.RunningInfo.Data = &model.RunningInfoData{
+		HostRunningInfo: c.HostCollector.GetRunningInfo(),
+		CpuRunningInfo:  c.CpuCollector.GetRunningInfo(),
+		MemRunningInfo:  c.MemCollector.GetRunningInfo(),
+		NetRunningInfo:  c.NetCollector.GetRunningInfo(),
+		DiskRunningInfo: c.DiskCollector.GetRunningInfo(),
+	}
 	return c.RunningInfo
 }

@@ -7,6 +7,6 @@
   "tcp_max_worker_task_len": 2,
   "reconnect_interval": 2,
   "log_mode": true,
-  "collect_interval": 2,
-  "net_name": ""
+  "net_name": "以太网",
+  "collect_interval": 2
 }

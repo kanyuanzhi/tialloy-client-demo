@@ -7,7 +7,6 @@ import (
 	"github.com/kanyuanzhi/tialloy-client/utils"
 	"strings"
 	"tialloy-client-demo/component"
-	"tialloy-client-demo/model"
 	utils2 "tialloy-client-demo/utils"
 	"time"
 )
@@ -16,18 +15,16 @@ func OnConnStartHook(connection ticface.IConnection) {
 	utils.GlobalLog.Infoln("connection is established, ready to send device info")
 	ip := strings.Split(connection.GetConn().LocalAddr().String(), ":")[0]
 
-	info := model.NewInfo()
-	var infoData []byte
-
 	collector := component.NewCollector()
 	collector.NetCollector.SetIP(ip)
 
 	basicInfo := collector.GetBasicInfo()
-	utils.GlobalLog.Infoln(basicInfo.NetBasicInfo)
-	info.BasicInfo = basicInfo
+	mac := basicInfo.Data.NetBasicInfo.Mac
+	basicInfo.Key = mac
+	utils.GlobalLog.Infoln(basicInfo.Data.NetBasicInfo)
 
-	infoData, _ = json.Marshal(info)
-	connection.SendMsg(1, infoData)
+	basicInfoBytes, _ := json.Marshal(basicInfo)
+	connection.SendMsg(101, basicInfoBytes)
 
 	ticker := time.NewTicker(utils2.CustomGlobalObject.CollectInterval * time.Second)
 	for {
@@ -37,10 +34,10 @@ func OnConnStartHook(connection ticface.IConnection) {
 			return
 		case <-ticker.C:
 			runningInfo := collector.GetRunningInfo()
-			info.RunningInfo = runningInfo
-			utils.GlobalLog.Traceln(info.BasicInfo.NetBasicInfo.Mac)
-			infoData, _ = json.Marshal(info)
-			connection.SendMsg(1, infoData)
+			runningInfo.Key = mac
+
+			runningInfoBytes, _ := json.Marshal(runningInfo)
+			connection.SendMsg(102, runningInfoBytes)
 		}
 	}
 }
