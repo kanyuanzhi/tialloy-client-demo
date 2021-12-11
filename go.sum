@@ -9,6 +9,8 @@ github.com/kanyuanzhi/tialloy-client v0.1.2 h1:fSpORbw/6Tsy9oSGWFdlnCxe23PU71Mnv
 github.com/kanyuanzhi/tialloy-client v0.1.2/go.mod h1:F6xIpxRbLU22qZoSCKCBWzCJihGzV7j+b5fv/fUkvJY=
 github.com/kanyuanzhi/tialloy-client v0.1.3 h1:RlZZTnRLk4I0tlb/fLdG+6SRszd9n9ZFEkYsaJClf08=
 github.com/kanyuanzhi/tialloy-client v0.1.3/go.mod h1:F6xIpxRbLU22qZoSCKCBWzCJihGzV7j+b5fv/fUkvJY=
+github.com/kanyuanzhi/tialloy-client v1.0.0 h1:ZHagg3SYvDvwXIVihj8dUYQiYCWbf40U2QKIlHjeZI0=
+github.com/kanyuanzhi/tialloy-client v1.0.0/go.mod h1:F6xIpxRbLU22qZoSCKCBWzCJihGzV7j+b5fv/fUkvJY=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/shirou/gopsutil v3.21.10+incompatible h1:AL2kpVykjkqeN+MFe1WcwSBVUjGjvdU8/ubvCuXAjrU=
@@ -29,6 +31,8 @@ golang.org/x/sys v0.0.0-20210816074244-15123e1e1f71/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20211204120058-94396e421777/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20211205182925-97ca703d548d h1:FjkYO/PPp4Wi0EAUOVLxePm7qVW4r4ctbWpURyuOD0E=
 golang.org/x/sys v0.0.0-20211205182925-97ca703d548d/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20211210111614-af8b64212486 h1:5hpz5aRr+W1erYCL5JRhSUBJRph7l9XkNveoExlrKYk=
+golang.org/x/sys v0.0.0-20211210111614-af8b64212486/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

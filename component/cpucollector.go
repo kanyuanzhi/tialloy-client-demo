@@ -6,29 +6,29 @@ import (
 )
 
 type CpuCollector struct {
-	CpuBasicInfo   *model.CpuBasicInfo
-	CpuRunningInfo *model.CpuRunningInfo
+	Basic   *model.TerminalCpuBasic
+	Running *model.TerminalCpuRunning
 }
 
 func NewCpuCollector() *CpuCollector {
 	return &CpuCollector{
-		CpuBasicInfo:   model.NewCpuBasicInfo(),
-		CpuRunningInfo: model.NewCpuRunningInfo(),
+		Basic:   model.NewTerminalCpuBasic(),
+		Running: model.NewTerminalCpuRunning(),
 	}
 }
 
-func (cc *CpuCollector) GetBasicInfo() *model.CpuBasicInfo {
+func (cc *CpuCollector) GetBasic() *model.TerminalCpuBasic {
 	cpuInfo, _ := cpu.Info()
-	cc.CpuBasicInfo.ModelName = cpuInfo[0].ModelName
-	cc.CpuBasicInfo.PhysicalCores, _ = cpu.Counts(false)
-	cc.CpuBasicInfo.LogicalCores, _ = cpu.Counts(true)
-	return cc.CpuBasicInfo
+	cc.Basic.ModelName = cpuInfo[0].ModelName
+	cc.Basic.PhysicalCores, _ = cpu.Counts(false)
+	cc.Basic.LogicalCores, _ = cpu.Counts(true)
+	return cc.Basic
 }
 
-func (cc *CpuCollector) GetRunningInfo() *model.CpuRunningInfo {
+func (cc *CpuCollector) GetRunning() *model.TerminalCpuRunning {
 	//cc.cpuRunningInfo.TotalPercent, _ = cpu.Percent(time.Duration(cpuCollector.duration)*time.Second, false)
 	//cc.cpuRunningInfo.PerPercent, _ = cpu.Percent(time.Duration(cpuCollector.duration)*time.Second, true)
-	cc.CpuRunningInfo.TotalPercent, _ = cpu.Percent(0, false)
-	cc.CpuRunningInfo.PerPercent, _ = cpu.Percent(0, true)
-	return cc.CpuRunningInfo
+	cc.Running.TotalPercent, _ = cpu.Percent(0, false)
+	cc.Running.PerPercent, _ = cpu.Percent(0, true)
+	return cc.Running
 }

@@ -5,8 +5,8 @@ import (
 )
 
 type Collector struct {
-	BasicInfo   *model.BasicInfo
-	RunningInfo *model.RunningInfo
+	Basic   *model.TerminalBasic
+	Running *model.TerminalRunning
 
 	Localhost string
 
@@ -19,8 +19,8 @@ type Collector struct {
 
 func NewCollector() *Collector {
 	return &Collector{
-		BasicInfo:   &model.BasicInfo{},
-		RunningInfo: &model.RunningInfo{},
+		Basic:   model.NewTerminalBasic(),
+		Running: model.NewTerminalRunning(),
 
 		HostCollector: NewHostCollector(),
 		CpuCollector:  NewCpuCollector(),
@@ -30,24 +30,24 @@ func NewCollector() *Collector {
 	}
 }
 
-func (c *Collector) GetBasicInfo() *model.BasicInfo {
-	c.BasicInfo.Data = &model.BasicInfoData{
-		HostBasicInfo: c.HostCollector.GetBasicInfo(),
-		CpuBasicInfo:  c.CpuCollector.GetBasicInfo(),
-		MemBasicInfo:  c.MemCollector.GetBasicInfo(),
-		NetBasicInfo:  c.NetCollector.GetBasicInfo(),
-		DiskBasicInfo: c.DiskCollector.GetBasicInfo(),
+func (c *Collector) GetBasic() *model.TerminalBasic {
+	c.Basic = &model.TerminalBasic{
+		HostBasic: c.HostCollector.GetBasic(),
+		CpuBasic:  c.CpuCollector.GetBasic(),
+		MemBasic:  c.MemCollector.GetBasic(),
+		NetBasic:  c.NetCollector.GetBasic(),
+		DiskBasic: c.DiskCollector.GetBasic(),
 	}
-	return c.BasicInfo
+	return c.Basic
 }
 
-func (c *Collector) GetRunningInfo() *model.RunningInfo {
-	c.RunningInfo.Data = &model.RunningInfoData{
-		HostRunningInfo: c.HostCollector.GetRunningInfo(),
-		CpuRunningInfo:  c.CpuCollector.GetRunningInfo(),
-		MemRunningInfo:  c.MemCollector.GetRunningInfo(),
-		NetRunningInfo:  c.NetCollector.GetRunningInfo(),
-		DiskRunningInfo: c.DiskCollector.GetRunningInfo(),
+func (c *Collector) GetRunning() *model.TerminalRunning {
+	c.Running = &model.TerminalRunning{
+		HostRunning: c.HostCollector.GetRunning(),
+		CpuRunning:  c.CpuCollector.GetRunning(),
+		MemRunning:  c.MemCollector.GetRunning(),
+		NetRunning:  c.NetCollector.GetRunning(),
+		DiskRunning: c.DiskCollector.GetRunning(),
 	}
-	return c.RunningInfo
+	return c.Running
 }

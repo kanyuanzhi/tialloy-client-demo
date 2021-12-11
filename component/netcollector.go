@@ -1,60 +1,79 @@
 package component
 
 import (
-	"github.com/kanyuanzhi/tialloy-client/utils"
+	"fmt"
 	"github.com/shirou/gopsutil/net"
+	"math/rand"
 	"strings"
+	"tialloy-client-demo/global"
 	"tialloy-client-demo/model"
 )
 
 type NetCollector struct {
-	NetBasicInfo   *model.NetBasicInfo
-	NetRunningInfo *model.NetRunningInfo
-
-	IP string
+	Basic   *model.TerminalNetBasic
+	Running *model.TerminalNetRunning
 }
 
 func NewNetCollector() *NetCollector {
 	return &NetCollector{
-		NetBasicInfo:   model.NewNetBasicInfo(),
-		NetRunningInfo: model.NewNetRunningInfo(),
+		Basic:   model.NewTerminalNetBasic(),
+		Running: model.NewTerminalNetRunning(),
 	}
 }
 
-func (nc *NetCollector) GetBasicInfo() *model.NetBasicInfo {
-	nc.NetBasicInfo.IP = nc.IP
+func (nc *NetCollector) GetBasic() *model.TerminalNetBasic {
+	nc.Basic.IP = global.IP
 	interfaces, _ := net.Interfaces()
 	for _, inter := range interfaces {
-		for _, addr := range inter.Addrs {
-			ip_ := strings.Split(addr.Addr, "/")[0]
-			if ip_ == nc.IP {
-				nc.NetBasicInfo.Name = inter.Name
-				nc.NetBasicInfo.Mac = inter.HardwareAddr
-				return nc.NetBasicInfo
+		if global.IP == "127.0.0.1" {
+			if inter.Name == global.Object.NetName {
+				nc.Basic.Name = inter.Name
+				nc.Basic.Mac = inter.HardwareAddr
+				return nc.Basic
+			} else {
+				for _, addr := range inter.Addrs {
+					ip_ := strings.Split(addr.Addr, "/")[0]
+					if ip_ == global.IP {
+						nc.Basic.Name = inter.Name
+						if inter.HardwareAddr == "" {
+							nc.Basic.Mac = fmt.Sprintf("uncertain-%d", rand.Int31n(1000))
+						} else {
+							nc.Basic.Mac = inter.HardwareAddr
+						}
+						return nc.Basic
+					}
+				}
 			}
+		} else {
+			for _, addr := range inter.Addrs {
+				ip_ := strings.Split(addr.Addr, "/")[0]
+				if ip_ == global.IP {
+					nc.Basic.Name = inter.Name
+					nc.Basic.Mac = inter.HardwareAddr
+					return nc.Basic
+				}
+			}
+			nc.Basic.Name = "uncertain"
+			nc.Basic.Mac = fmt.Sprintf("uncertain-%d", rand.Int31n(1000))
+			return nc.Basic
 		}
 	}
-	utils.GlobalLog.Warnf("IP=%s is not match", nc.IP)
-	return nc.NetBasicInfo
+	return nc.Basic
 }
 
-func (nc *NetCollector) GetRunningInfo() *model.NetRunningInfo {
+func (nc *NetCollector) GetRunning() *model.TerminalNetRunning {
 	IOCounters, _ := net.IOCounters(true) // true统计每一个网卡的信息，false统计总信息
 	for _, IOCounter := range IOCounters {
-		if IOCounter.Name == nc.NetBasicInfo.Name {
-			nc.NetRunningInfo.BytesSent = IOCounter.BytesSent
-			nc.NetRunningInfo.BytesRecv = IOCounter.BytesRecv
-			nc.NetRunningInfo.PacketsSent = IOCounter.PacketsSent
-			nc.NetRunningInfo.PacketsRecv = IOCounter.PacketsRecv
-			nc.NetRunningInfo.Errin = IOCounter.Errin
-			nc.NetRunningInfo.Errout = IOCounter.Errout
-			nc.NetRunningInfo.Dropin = IOCounter.Dropin
-			nc.NetRunningInfo.Dropout = IOCounter.Dropout
+		if IOCounter.Name == nc.Basic.Name {
+			nc.Running.BytesSent = IOCounter.BytesSent
+			nc.Running.BytesRecv = IOCounter.BytesRecv
+			nc.Running.PacketsSent = IOCounter.PacketsSent
+			nc.Running.PacketsRecv = IOCounter.PacketsRecv
+			nc.Running.Errin = IOCounter.Errin
+			nc.Running.Errout = IOCounter.Errout
+			nc.Running.Dropin = IOCounter.Dropin
+			nc.Running.Dropout = IOCounter.Dropout
 		}
 	}
-	return nc.NetRunningInfo
-}
-
-func (nc *NetCollector) SetIP(ip string) {
-	nc.IP = ip
+	return nc.Running
 }

@@ -8,5 +8,6 @@
   "reconnect_interval": 2,
   "log_mode": true,
   "net_name": "以太网",
-  "collect_interval": 2
+  "windows_path": "c:",
+  "collect_interval": 1
 }

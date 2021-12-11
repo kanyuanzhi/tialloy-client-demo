@@ -1,6 +1,6 @@
 package face
 
 type ICollector interface {
-	GetBasicInfo() interface{}
-	GetRunningInfo() interface{}
+	GetBasic() interface{}
+	GetRunning() interface{}
 }

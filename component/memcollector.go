@@ -6,27 +6,27 @@ import (
 )
 
 type MemCollector struct {
-	MemBasicInfo   *model.MemBasicInfo
-	MemRunningInfo *model.MemRunningInfo
+	Basic   *model.TerminalMemBasic
+	Running *model.TerminalMemRunning
 }
 
 func NewMemCollector() *MemCollector {
 	return &MemCollector{
-		MemBasicInfo:   model.NewMemBasicInfo(),
-		MemRunningInfo: model.NewMemRunningInfo(),
+		Basic:   model.NewTerminalMemBasic(),
+		Running: model.NewTerminalMemRunning(),
 	}
 }
 
-func (mc *MemCollector) GetBasicInfo() *model.MemBasicInfo {
+func (mc *MemCollector) GetBasic() *model.TerminalMemBasic {
 	memInfo, _ := mem.VirtualMemory()
-	mc.MemBasicInfo.Total = memInfo.Total
-	return mc.MemBasicInfo
+	mc.Basic.Total = memInfo.Total
+	return mc.Basic
 }
 
-func (mc *MemCollector) GetRunningInfo() *model.MemRunningInfo {
+func (mc *MemCollector) GetRunning() *model.TerminalMemRunning {
 	memInfo, _ := mem.VirtualMemory()
-	mc.MemRunningInfo.Available = memInfo.Available
-	mc.MemRunningInfo.Used = memInfo.Used
-	mc.MemRunningInfo.UsedPercent = memInfo.UsedPercent
-	return mc.MemRunningInfo
+	mc.Running.Available = memInfo.Available
+	mc.Running.Used = memInfo.Used
+	mc.Running.UsedPercent = memInfo.UsedPercent
+	return mc.Running
 }
